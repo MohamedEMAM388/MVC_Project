@@ -1,6 +1,7 @@
 ﻿using GymManagementDAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace GymManagementDAL.Data.Configurations
 
             builder.ToTable(tb =>
             {
-                tb.HasCheckConstraint("GymUserValidEmail", "Email like '_%@_._%'");
+                tb.HasCheckConstraint("GymUserValidEmail", "Email LIKE '%@%._%'");
+
                 tb.HasCheckConstraint("GymUserValidPhone", "Phone like '01%' and Phone not like '%[^0-9]%'");
             });
 

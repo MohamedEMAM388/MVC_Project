@@ -4,19 +4,16 @@ using GymManagementDAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GymManagementDAL.Data.Migrations
+namespace GymManagementDAL.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    [Migration("20251007181722_InitialCreate")]
-    partial class InitialCreate
+    partial class GymDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,7 +125,7 @@ namespace GymManagementDAL.Data.Migrations
 
                     b.ToTable("Members", t =>
                         {
-                            t.HasCheckConstraint("GymUserValidEmail", "Email like '_%@_._%'");
+                            t.HasCheckConstraint("GymUserValidEmail", "Email LIKE '%@%._%'");
 
                             t.HasCheckConstraint("GymUserValidPhone", "Phone like '01%' and Phone not like '%[^0-9]%'");
                         });
@@ -333,7 +330,7 @@ namespace GymManagementDAL.Data.Migrations
 
                     b.ToTable("Trainers", t =>
                         {
-                            t.HasCheckConstraint("GymUserValidEmail", "Email like '_%@_._%'")
+                            t.HasCheckConstraint("GymUserValidEmail", "Email LIKE '%@%._%'")
                                 .HasName("GymUserValidEmail1");
 
                             t.HasCheckConstraint("GymUserValidPhone", "Phone like '01%' and Phone not like '%[^0-9]%'")

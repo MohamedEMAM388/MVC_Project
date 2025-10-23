@@ -29,11 +29,11 @@ namespace GymManagementBLL.Services.classes
             try {
 
                 // check if trainer exist
-                if (IsTrainerExist(createSession.TrainerId)) return false;
+                if (!IsTrainerExist(createSession.TrainerId)) return false;
                 // check if category exist
-                if (IsCategoryExsit(createSession.CategoryId)) return false;
+                if (!IsCategoryExsit(createSession.CategoryId)) return false;
                 // checl if startdate < enddate
-                if (IsDateTimeValid(createSession.StartDate, createSession.EndDate)) return false;
+                if (!IsDateTimeValid(createSession.StartDate, createSession.EndDate)) return false;
 
                 if (createSession.Capacity > 25 || createSession.Capacity < 0) return false;
 
@@ -164,6 +164,18 @@ namespace GymManagementBLL.Services.classes
             }
         }
 
+        public IEnumerable<TrainerSelectViewModel> GetAllTrainersForSelect()
+        {
+            var trainers = _unitOfWork.GetRepository<Trainer>().GetAll();
+            return _mapper.Map<IEnumerable<TrainerSelectViewModel>>(trainers);
+        }
+
+        public IEnumerable<CategorySelectViewModel> GetAllCategoriesForSelect()
+        {
+           var categories = _unitOfWork.GetRepository<Category>().GetAll();
+            return _mapper.Map<IEnumerable<CategorySelectViewModel>>(categories);
+        }
+
 
         #region HelperMethods
 
@@ -180,23 +192,15 @@ namespace GymManagementBLL.Services.classes
 
         private bool IsDateTimeValid(DateTime startdate, DateTime enddate) {
 
-            return startdate < enddate;
-        
+            return startdate < enddate;        
         }
 
-        private bool CheckIfSessionIsAvailableForIpdate(Session session) { 
-        
-            if(session.StartDate > DateTime.Now) return false;
+        private bool CheckIfSessionIsAvailableForIpdate(Session session) {
 
-            if (session.StartDate <= DateTime.Now) return false;
+            // Only future sessions with no bookings
+            return session.StartDate > DateTime.Now &&
+                   _unitOfWork.sessionRepository.GetCountOfBooking(session.Id) == 0;
 
-
-            var hasactiveBooking = _unitOfWork.sessionRepository.GetCountOfBooking(session.Id) > 0;
-
-            if (hasactiveBooking) return false;
-
-            return true;
-        
         }
 
 
@@ -212,6 +216,8 @@ namespace GymManagementBLL.Services.classes
 
         
         }
+
+
         #endregion
     }
 }

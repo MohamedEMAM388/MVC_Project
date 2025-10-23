@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace GymManagementDAL.Data.Migrations
+namespace GymManagementDAL.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -51,7 +51,7 @@ namespace GymManagementDAL.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Members", x => x.Id);
-                    table.CheckConstraint("GymUserValidEmail", "Email like '_%@_._%'");
+                    table.CheckConstraint("GymUserValidEmail", "Email LIKE '%@%._%'");
                     table.CheckConstraint("GymUserValidPhone", "Phone like '01%' and Phone not like '%[^0-9]%'");
                 });
 
@@ -96,7 +96,7 @@ namespace GymManagementDAL.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Trainers", x => x.Id);
-                    table.CheckConstraint("GymUserValidEmail1", "Email like '_%@_._%'");
+                    table.CheckConstraint("GymUserValidEmail1", "Email LIKE '%@%._%'");
                     table.CheckConstraint("GymUserValidPhone1", "Phone like '01%' and Phone not like '%[^0-9]%'");
                 });
 

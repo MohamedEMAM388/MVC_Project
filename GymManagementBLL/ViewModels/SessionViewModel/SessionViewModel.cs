@@ -14,7 +14,7 @@ namespace GymManagementBLL.ViewModels.SessionViewModel
         public string Description { get; set; } = null!;
         public string TrainetrName { get; set; } = null!;
         public DateTime StartDate { get; set; }
-        public DateTime EndtDate { get; set; }
+        public DateTime EndDate { get; set; }
         public int Capacity { get; set; }
         public int Availableslots { get; set; }
 
@@ -22,9 +22,9 @@ namespace GymManagementBLL.ViewModels.SessionViewModel
 
         public string DateDisplay => $"{StartDate: MMM dd , yyyy}";
 
-        public string TimeRangeDisplay => $"{StartDate: hh : mm tt} - {EndtDate: hh : mm tt}";
+        public string TimeRangeDisplay => $"{StartDate: hh : mm tt} - {EndDate: hh : mm tt}";
 
-        public TimeSpan Duration => EndtDate - StartDate;
+        public TimeSpan Duration => EndDate - StartDate;
 
         public string Status
         {
@@ -33,8 +33,8 @@ namespace GymManagementBLL.ViewModels.SessionViewModel
                 // if session upcoming => startdate > date.now
                 if (StartDate > DateTime.Now)
                     return "Upcoming";
-                else if (StartDate <= DateTime.Now && EndtDate >= DateTime.Now)
-                    return "OnGoing";
+                else if (StartDate <= DateTime.Now && EndDate >= DateTime.Now)
+                    return "Ongoing";
                 else
                     return " Completed";
                             
