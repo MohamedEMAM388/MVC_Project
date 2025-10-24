@@ -41,6 +41,7 @@ namespace GymManagementBLL.Services.classes
 
                 var createsession = _mapper.Map<Session>(createSession);
                 _unitOfWork.GetRepository<Session>().Add(createsession);
+                _unitOfWork.SaveChanges();
                 return true;
 
 
