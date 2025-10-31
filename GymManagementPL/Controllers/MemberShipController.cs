@@ -29,17 +29,6 @@ namespace GymManagementPL.Controllers
 
         [HttpPost]
         public ActionResult Create(CreateMemberShipViewModel createmembership) {
-
-
-
-            //if (!ModelState.IsValid) {
-
-            //    LoadMemberList();
-            //    LoadPlanList();
-
-            //    return View(createmembership);
-            //}
-
             bool isCreated = memberShipServies.CreateMemberShip(createmembership);
             if (isCreated) {
                 TempData["SuccessMessage"] = "Membership Created Successfully";
