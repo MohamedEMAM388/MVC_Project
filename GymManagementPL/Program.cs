@@ -36,6 +36,8 @@ namespace GymManagementPL
             builder.Services.AddScoped<ITrainerServies, TrainerServies>();
             builder.Services.AddScoped<IPlanServies, PlanServies>();
             builder.Services.AddScoped<ISessionServies, SessionServies>();
+            builder.Services.AddScoped<IMemberShipServies, MemberShipServies>();
+            builder.Services.AddScoped<IMemberShipRepository, MemberShipRepository>();
             #endregion
 
             var app = builder.Build();
@@ -43,16 +45,16 @@ namespace GymManagementPL
             #region Dataseeding
 
 
-            // we need object from dbcontext so we gonna to ask clr to inject object of gymdbcontext from scopedservies
-            using var scoped = app.Services.CreateScope();
-            var dbcontext = scoped.ServiceProvider.GetRequiredService<GymDbContext>();
-            // to applay dataseed first check if no pending migrations
-            var pendingmaigrations = dbcontext.Database.GetPendingMigrations();
-            if (pendingmaigrations?.Any() ?? false)
-                dbcontext.Database.Migrate();
+            //// we need object from dbcontext so we gonna to ask clr to inject object of gymdbcontext from scopedservies
+            //using var scoped = app.Services.CreateScope();
+            //var dbcontext = scoped.ServiceProvider.GetRequiredService<GymDbContext>();
+            //// to applay dataseed first check if no pending migrations
+            //var pendingmaigrations = dbcontext.Database.GetPendingMigrations();
+            //if (pendingmaigrations?.Any() ?? false)
+            //    dbcontext.Database.Migrate();
 
-            // applay dataseed
-            GymDbContextSeeding.SeedData(dbcontext);
+            //// applay dataseed
+            //GymDbContextSeeding.SeedData(dbcontext);
 
 
             #endregion

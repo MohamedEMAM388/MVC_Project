@@ -16,5 +16,7 @@ namespace GymManagementDAL.Data.Repositories.Interfaces
      int SaveChanges();
 
         public ISessionRepository sessionRepository { get; }
+
+        public IMemberShipRepository MemberShipRepository { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GymManagementBLL.ViewModels.MemberShipViewModel;
 using GymManagementBLL.ViewModels.MemberViewModel;
 using GymManagementBLL.ViewModels.PlanViewModel;
 using GymManagementBLL.ViewModels.SessionViewModel;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,7 +30,7 @@ namespace GymManagementBLL
 
             MappingPlans();
 
-
+            MappingMemberShips();
 
         }
 
@@ -163,6 +165,29 @@ namespace GymManagementBLL
 
 
             #endregion
+        }
+
+        private void MappingMemberShips() { 
+        
+        
+            CreateMap<MemberShip , MemberShipViewModel>()
+                      .ForMember(dst => dst.MemberName , options => options.MapFrom(src => src.Memebre.Name))
+                      .ForMember(dst => dst.PlanName , options => options.MapFrom(src => src.Plan.Name))
+                      .ForMember(dst => dst.StartDate , options => options.MapFrom(src => src.CreatedAt));
+
+            CreateMap<CreateMemberShipViewModel, MemberShip>()
+                .ForMember(dst => dst.MemebreId, opt => opt.MapFrom(src => src.MemberId))
+                .ForMember(dst => dst.PlanId, opt => opt.MapFrom(src => src.PlanId))
+                .ForMember(dst => dst.EndDate, opt => opt.Ignore()); 
+
+
+            // Mapping for Plan → PlanSelectViewModel
+            CreateMap<Plan, PlanSelectViewModel>();
+
+            // Mapping for Member → MemberSelectViewModel
+            CreateMap<Member, MemberSelectViewModel>();
+
+
         }
 
     }

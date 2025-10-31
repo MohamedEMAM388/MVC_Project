@@ -59,17 +59,7 @@ namespace GymManagementBLL.Services.classes
             var sessions = _unitOfWork.sessionRepository.GetSessionsWithCategoryAndTrainer();
             if (!sessions.Any()) return [];
 
-            //return sessions.Select(X => new SessionViewModel {
 
-            //    Id = X.Id,
-            //    CategoryName = X.Category.CategoryName,
-            //    Description = X.Description,
-            //    TrainetrName = X.SessionTrainer.Name,
-            //    StartDate = X.StartDate,
-            //    EndtDate = X.EndDate,
-            //    Availableslots = X.Capacity - _unitOfWork.sessionRepository.GetCountOfBooking(X.Id)
-
-            //});
 
                 var mappedsessions = _mapper.Map<IEnumerable<Session>, IEnumerable<SessionViewModel>>(sessions);
             foreach (var session in mappedsessions) {
@@ -86,19 +76,7 @@ namespace GymManagementBLL.Services.classes
             var session = _unitOfWork.sessionRepository.GetSessionDetailsWithTrainerAndCategory(sessionid);
             if (session is null) return null;
 
-            //return new SessionViewModel
-            //{
 
-            //    Id = sessionid,
-            //    CategoryName = session.Category.CategoryName,
-            //    Description = session.Description,
-            //    TrainetrName = session.SessionTrainer.Name,
-            //    StartDate = session.StartDate,
-            //    EndtDate = session.EndDate,
-            //    Availableslots = session.Capacity - _unitOfWork.sessionRepository.GetCountOfBooking(sessionid)
-
-
-            //};
 
             var mappedsession = _mapper.Map<Session, SessionViewModel>(session);
             mappedsession.Availableslots = mappedsession.Capacity - _unitOfWork.sessionRepository.GetCountOfBooking(mappedsession.Id);
@@ -125,7 +103,7 @@ namespace GymManagementBLL.Services.classes
                 if (!IsTrainerExist(session!.TrainerId)) return false;
                 if (!IsDateTimeValid(session.StartDate, session.EndDate)) return false;
 
-                _mapper.Map(UpdateSession, session);
+                _mapper.Map(sessionupdate, session);
                 session.UpdatedAt = DateTime.Now;
                 _unitOfWork.GetRepository<Session>().Update(session);
                 return _unitOfWork.SaveChanges() > 0;

@@ -1,44 +1,43 @@
 ﻿using GymManagementDAL.Data.Context;
 using GymManagementDAL.Data.Repositories.Interfaces;
 using GymManagementDAL.Entities;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GymManagementDAL.Data.Repositories.Classes
 {
     public class UnitOfWork : IUnitOfWork
     {
-
-        private readonly Dictionary<Type , object> _repositries= new ();
+        private readonly Dictionary<Type, object> _repositories = new();
         private readonly GymDbContext _dbContext;
 
-        public UnitOfWork(GymDbContext dbContext , ISessionRepository sessionRepository)
+        public UnitOfWork(GymDbContext dbContext, ISessionRepository sessionRepository, IMemberShipRepository memberShipRepository)
         {
             _dbContext = dbContext;
             this.sessionRepository = sessionRepository;
+            MemberShipRepository = memberShipRepository;
         }
 
         public ISessionRepository sessionRepository { get; }
 
+        
+
+        public IMemberShipRepository MemberShipRepository { get; }
+
         public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity, new()
         {
-            var TypeEntity = typeof(TEntity);
-            if (_repositries.TryGetValue(TypeEntity, out var Repo))
-                return (IGenericRepository<TEntity>)Repo;
+            var entityType = typeof(TEntity);
+            if (_repositories.TryGetValue(entityType, out var repo))
+                return (IGenericRepository<TEntity>)repo;
 
             var newRepo = new GenericRepository<TEntity>(_dbContext);
-            _repositries.Add(TypeEntity, newRepo);
+            _repositories.Add(entityType, newRepo);
             return newRepo;
-
         }
 
         public int SaveChanges()
         {
-           return _dbContext.SaveChanges();
+            return _dbContext.SaveChanges();
         }
     }
 }
