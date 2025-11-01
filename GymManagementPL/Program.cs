@@ -1,4 +1,5 @@
 using GymManagementBLL;
+using GymManagementBLL.Services.AttachmentServies;
 using GymManagementBLL.Services.classes;
 using GymManagementBLL.Services.Interfaces;
 using GymManagementDAL.Data.Context;
@@ -38,6 +39,8 @@ namespace GymManagementPL
             builder.Services.AddScoped<ISessionServies, SessionServies>();
             builder.Services.AddScoped<IMemberShipServies, MemberShipServies>();
             builder.Services.AddScoped<IMemberShipRepository, MemberShipRepository>();
+            builder.Services.AddScoped<IAttachmentServies, AttachmentServies>();
+
             #endregion
 
             var app = builder.Build();

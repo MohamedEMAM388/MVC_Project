@@ -45,6 +45,22 @@ namespace GymManagementPL.Controllers
         }
 
 
+        public ActionResult Remove(int memberid,int planid) { 
+        
+            bool isRemoved = memberShipServies.RemoveMemberShip( memberid, planid);
+            if (isRemoved)
+            {
+                TempData["SuccessMessage"] = "Membership Removed Successfully";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Membership Removal Failed";
+            }
+            return RedirectToAction(nameof(Index));
+
+
+        }
+
         #region HelperMethods
 
         private void LoadMemberList() {

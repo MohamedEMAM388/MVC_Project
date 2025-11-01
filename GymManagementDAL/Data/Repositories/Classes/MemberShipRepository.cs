@@ -27,5 +27,6 @@ namespace GymManagementDAL.Data.Repositories.Classes
                 .Include(ms => ms.Plan)
                 .ToList();
         }
+
     }
 }

@@ -10,10 +10,10 @@ namespace GymManagementDAL.Entities
     {
         // joinDate == CreatedAt
 
-        public string? Photo { get; set; }
+        public string Photo { get; set; } = null!;
 
         #region HealthRecord RelationShip
-       public HealthRecord HealthRecord { get; set; } = null!;
+        public HealthRecord HealthRecord { get; set; } = null!;
 
         #endregion
         #region Member - MemberShip

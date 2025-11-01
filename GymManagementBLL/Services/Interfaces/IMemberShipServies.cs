@@ -12,7 +12,7 @@ namespace GymManagementBLL.Services.Interfaces
     {
         IEnumerable<MemberShipViewModel> GetAll();
         bool CreateMemberShip(CreateMemberShipViewModel createMemberShipViewModel);
-        bool RemoveMemberShip(int membershipid);
+        bool RemoveMemberShip(int memberid , int planid);
 
         IEnumerable<PlanSelectViewModel> GetPlansForSelect();
         IEnumerable<MemberSelectViewModel> GetMembersFroSelect();

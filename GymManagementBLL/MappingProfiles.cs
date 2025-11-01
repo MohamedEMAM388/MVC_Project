@@ -178,7 +178,7 @@ namespace GymManagementBLL
             CreateMap<CreateMemberShipViewModel, MemberShip>()
                 .ForMember(dst => dst.MemebreId, opt => opt.MapFrom(src => src.MemberId))
                 .ForMember(dst => dst.PlanId, opt => opt.MapFrom(src => src.PlanId))
-                .ForMember(dst => dst.EndDate, opt => opt.Ignore()); 
+                ; 
 
 
             // Mapping for Plan → PlanSelectViewModel

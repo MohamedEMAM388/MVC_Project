@@ -22,17 +22,15 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
-    @if (TempData["Error Message"] is not null)
-    {
 
+    @if (TempData["ErrorMessage"] is not null)
+    {
         <div id="Alert" class="alert alert-danger alert-dismissible fade show">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            @TempData["Error Message"]
+            <i class="bi bi-check-circle-fill me-2"></i>
+            @TempData["ErrorMessage"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-        
     }
-
 
     <div class="card">
         <div class="card-body">
@@ -60,12 +58,15 @@
                                 <td>@item.EndDate</td>
                                 <td>
                                     <div class="d-flex gap-1">
-                                        <form method="post" href="membership/cancel" class="m-0">
-                                            <input type="hidden" name="id" value="@item.Id" />
+                                        <form asp-action="Remove" asp-controller="MemberShip" method="get" class="m-0">
+                                            <input type="hidden" name="planId" value="@item.PlanId" />
+                                            <input type="hidden" name="memberId" value="@item.MemebreId" />
+
                                             <button type="submit" class="btn btn-sm btn-danger">
                                                 <i class="fas fa-times"></i> Cancel
                                             </button>
                                         </form>
+
                                     </div>
                                 </td>
                             </tr>
