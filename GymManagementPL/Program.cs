@@ -6,6 +6,8 @@ using GymManagementDAL.Data.Context;
 using GymManagementDAL.Data.DataSeeding;
 using GymManagementDAL.Data.Repositories.Classes;
 using GymManagementDAL.Data.Repositories.Interfaces;
+using GymManagementDAL.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace GymManagementPL
@@ -40,6 +42,17 @@ namespace GymManagementPL
             builder.Services.AddScoped<IMemberShipServies, MemberShipServies>();
             builder.Services.AddScoped<IMemberShipRepository, MemberShipRepository>();
             builder.Services.AddScoped<IAttachmentServies, AttachmentServies>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            
+            config.User.RequireUniqueEmail = true
+            ).AddEntityFrameworkStores<GymDbContext>();
+
+            builder.Services.ConfigureApplicationCookie(options => { 
+            
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+
+           });
 
             #endregion
 
@@ -49,15 +62,18 @@ namespace GymManagementPL
 
 
             //// we need object from dbcontext so we gonna to ask clr to inject object of gymdbcontext from scopedservies
-            //using var scoped = app.Services.CreateScope();
-            //var dbcontext = scoped.ServiceProvider.GetRequiredService<GymDbContext>();
-            //// to applay dataseed first check if no pending migrations
-            //var pendingmaigrations = dbcontext.Database.GetPendingMigrations();
-            //if (pendingmaigrations?.Any() ?? false)
-            //    dbcontext.Database.Migrate();
+            using var scoped = app.Services.CreateScope();
+            var dbcontext = scoped.ServiceProvider.GetRequiredService<GymDbContext>();
+            var rolemanager = scoped.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var usermanager = scoped.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            // to applay dataseed first check if no pending migrations
+            var pendingmaigrations = dbcontext.Database.GetPendingMigrations();
+            if (pendingmaigrations?.Any() ?? false)
+                dbcontext.Database.Migrate();
 
-            //// applay dataseed
-            //GymDbContextSeeding.SeedData(dbcontext);
+            // applay dataseed
+            GymDbContextSeeding.SeedData(dbcontext);
+            IdentityDbContextSeeding.SeedData(rolemanager, usermanager);
 
 
             #endregion
