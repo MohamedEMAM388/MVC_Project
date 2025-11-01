@@ -42,10 +42,12 @@ namespace GymManagementPL
             builder.Services.AddScoped<IMemberShipServies, MemberShipServies>();
             builder.Services.AddScoped<IMemberShipRepository, MemberShipRepository>();
             builder.Services.AddScoped<IAttachmentServies, AttachmentServies>();
+            builder.Services.AddScoped<IAccountServies, AccountServies>();
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(config =>
-            
-            config.User.RequireUniqueEmail = true
-            ).AddEntityFrameworkStores<GymDbContext>();
+            {
+                config.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<GymDbContext>();
 
             builder.Services.ConfigureApplicationCookie(options => { 
             
@@ -89,12 +91,13 @@ namespace GymManagementPL
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Account}/{action=Login}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

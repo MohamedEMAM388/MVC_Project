@@ -55,7 +55,7 @@ namespace GymManagementDAL.Data.DataSeeding
 
                         FirstName = "Mohamed",
                         LastName = "Hisham",
-                        UserName = "Mohamed Hisham",
+                        UserName = "MohamedHisham",
                         Email = "Mohamed@gmail.com",
                         PhoneNumber = "01021840100",
                     };
@@ -68,7 +68,7 @@ namespace GymManagementDAL.Data.DataSeeding
 
                         FirstName = "Ahmed",
                         LastName = "Ali",
-                        UserName = "Ahmed Ali",
+                        UserName = "AhmedAli",
                         Email = "Ahmed@gmail.com",
                         PhoneNumber = "01021840569",
                     };

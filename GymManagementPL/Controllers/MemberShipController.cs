@@ -1,12 +1,14 @@
 ﻿using GymManagementBLL.Services.classes;
 using GymManagementBLL.Services.Interfaces;
 using GymManagementBLL.ViewModels.MemberShipViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net.WebSockets;
 
 namespace GymManagementPL.Controllers
 {
+    //[Authorize(Roles = "SuperAdmin")]
     public class MemberShipController : Controller
     {
         private readonly IMemberShipServies memberShipServies;
